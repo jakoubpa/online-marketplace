@@ -18,8 +18,16 @@
             {{item.description}}
         </p>
         {% endif %}
+        {% if request.user == item.created_by %}
+        <div class="mt-6 p-6 bg-white rounded-xl">
+            <p>Your item:</p>
 
-        <a href="" class="inline-block mt-6 px-6 py-3 text-lg font-semibold bg-teal-500 text-white hover:bg-teal-700 rounded-xl">Contact seller</a>
+            <a href="{% url 'item:edit' item.id %}" class="inline-block mt-6 px-6 py-3 text-lg font-semibold bg-teal-500 text-white rounded-xl">Edit</a>
+            <a href="{% url 'item:delete' item.id %}" class="inline-block mt-6 px-6 py-3 text-lg font-semibold bg-red-500 text-white rounded-xl">Delete</a>
+        </div>
+    {% else %}  
+        <a href="{% url 'conversation:new' item.id %}" class="inline-block mt-6 px-6 py-3 text-lg font-semibold bg-teal-500 text-white rounded-xl hover:bg-teal-700">Contact seller</a>
+    {% endif %}
     </div>
 </div>
 <div class="mt-6 px-6 py-12 bg-gray-100 rounded-xl">
@@ -35,21 +43,6 @@
                 <div class="p-6 bg-white rounded-b-xl w-56">
                     <h2 class="text-2xl">{{ item.name }}</h2>
                     <p class="text-gray-500">Price: {{ item.price }}</p>
-                </div>
-            </a>
-        </div>
-        {%endfor%}
-    </div>
-</div>
-<div class="mt-6 px-6 py-12 bg-gray-100 rounded-xl">
-    <h2 class="mb-12 text-2xl text-center">Categories</h2>
-    <div class="grid grid-cols-3 gap-3">
-        {% for category in categories%}
-        <div>
-            <a href="#">
-                <div class="p-6 bg-white rounded-b-xl">
-                    <h2 class="text-2xl>">{{ category.name }}</h2>
-                    <p class="text-gray-500"> {{ category.items.count }} items</p>
                 </div>
             </a>
         </div>
